@@ -107,6 +107,12 @@
 			<artifactId>spring-session-jdbc</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-csv</artifactId>
+			<version>2.5.3</version>
+		</dependency>
+
 	</dependencies>
 
 
@@ -118,5 +124,8 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+
 
 </project>

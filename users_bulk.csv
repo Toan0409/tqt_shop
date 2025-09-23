@@ -1,0 +1,21 @@
+﻿email,password,fullName,phoneNumber,address,role
+user1@gmail.com,pass01,Test User 1,84987650001,Hà Nội,USER
+user2@gmail.com,pass02,Test User 2,84987650002,Hồ Chí Minh,ADMIN
+user3@gmail.com,pass03,Test User 3,84987650003,Đà Nẵng,USER
+user4@gmail.com,pass04,Test User 4,84987650004,Cần Thơ,ADMIN
+user5@gmail.com,pass05,Test User 5,84987650005,Hải Phòng,USER
+user6@gmail.com,pass06,Test User 6,84987650006,Hà Nội,ADMIN
+user7@gmail.com,pass07,Test User 7,84987650007,Hồ Chí Minh,USER
+user8@gmail.com,pass08,Test User 8,84987650008,Đà Nẵng,ADMIN
+user9@gmail.com,pass09,Test User 9,84987650009,Cần Thơ,USER
+user10@gmail.com,pass10,Test User 10,84987650010,Hải Phòng,ADMIN
+user11@gmail.com,pass11,Test User 11,84987650011,Hà Nội,USER
+user12@gmail.com,pass12,Test User 12,84987650012,Hồ Chí Minh,ADMIN
+user13@gmail.com,pass13,Test User 13,84987650013,Đà Nẵng,USER
+user14@gmail.com,pass14,Test User 14,84987650014,Cần Thơ,ADMIN
+user15@gmail.com,pass15,Test User 15,84987650015,Hải Phòng,USER
+user16@gmail.com,pass16,Test User 16,84987650016,Hà Nội,ADMIN
+user17@gmail.com,pass17,Test User 17,84987650017,Hồ Chí Minh,USER
+user18@gmail.com,pass18,Test User 18,84987650018,Đà Nẵng,ADMIN
+user19@gmail.com,pass19,Test User 19,84987650019,Cần Thơ,USER
+user20@gmail.com,pass20,Test User 20,84987650020,Hải Phòng,ADMIN

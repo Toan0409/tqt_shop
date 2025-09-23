@@ -29,10 +29,37 @@
                             <!-- Header with Add button -->
                             <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
                                 <h5 class="card-title mb-0">Danh sách khách hàng</h5>
-                                <a href="/admin/user/add" class="btn btn-primary">
-                                    <i class="bi bi-plus-lg"></i> Thêm khách hàng
-                                </a>
+
+                                <!-- Dropdown Add Button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-person-plus"></i> Thêm khách hàng
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="/admin/user/add">
+                                                <i class="bi bi-pencil-square"></i> Thêm thủ công
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <form action="/admin/user/upload-csv" method="post"
+                                                enctype="multipart/form-data" class="px-3 py-2">
+                                                <label for="csvFile" class="form-label small mb-1 fw-bold">
+                                                    Tải từ CSV
+                                                </label>
+                                                <input type="file" class="form-control form-control-sm mb-2"
+                                                    id="csvFile" name="file" accept=".csv">
+                                                <button type="submit" class="btn btn-sm btn-outline-primary w-100">
+                                                    <i class="bi bi-upload"></i> Upload
+                                                </button>
+                                            </form>
+
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
 
                             <!-- Search form -->
                             <form class="row g-2 mb-3" method="get" action="/admin/user">

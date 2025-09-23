@@ -1,0 +1,6 @@
+﻿email,password,fullName,phoneNumber,address,role
+nguyenvana@gmail.com,123456,Nguyen Van A,84912345678,Hà Nội,USER
+tranthib@gmail.com,abc123,Tran Thi B,84987654321,Hồ Chí Minh,ADMIN
+lehoangc@gmail.com,password1,Le Hoang C,84881234567,Đà Nẵng,USER
+phamthingocd@gmail.com,secret99,Pham Thi Ngoc D,84765432109,Cần Thơ,USER
+vuquange@gmail.com,qwerty12,Vu Quang E,84911223344,Hải Phòng,ADMIN

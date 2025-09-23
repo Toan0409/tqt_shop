@@ -2,6 +2,10 @@ package vn.java.laptopshop.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import vn.java.laptopshop.domain.User;
@@ -26,5 +30,12 @@ public class UserService {
 
     public boolean isEmailExists(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    // Lấy toàn bộ danh sách người dùng có phân trang
+    public Page<User> getAllUsersPaged(Pageable pageable) {
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "id"));
+        return userRepository.findAll(sortedPageable);
     }
 }
