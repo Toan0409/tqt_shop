@@ -18,7 +18,24 @@ public class RegisterDTO {
     private String fullName;
     private long phoneNumber;
     private String address;
+    private String avatar;
     private String roleName;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public String getPassword() {
         return password;

@@ -24,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.Valid;
 import vn.java.laptopshop.domain.Role;
 import vn.java.laptopshop.domain.User;
+import vn.java.laptopshop.domain.dto.RegisterDTO;
 import vn.java.laptopshop.repository.RoleRepository;
+import vn.java.laptopshop.service.AiCustomerService;
 import vn.java.laptopshop.service.UploadService;
 import vn.java.laptopshop.service.UserService;
 
@@ -35,10 +37,12 @@ public class UserController {
     private final UserService userService;
     private final UploadService uploadService;
     private final PasswordEncoder passwordEncoder;
+    private final AiCustomerService aiCustomerService;
 
     public UserController(RoleRepository roleRepository, UserService userService, UploadService uploadService,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder, AiCustomerService aiCustomerService) {
         this.roleRepository = roleRepository;
+        this.aiCustomerService = aiCustomerService;
         this.userService = userService;
         this.uploadService = uploadService;
         this.passwordEncoder = passwordEncoder;
@@ -109,7 +113,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    @PostMapping("/admin/user/upload-csv")
+    @PostMapping("/admin/user/add-by-upload-csv")
     public String uploadCsvFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return "redirect:/admin/user?error=File trống";
@@ -165,6 +169,29 @@ public class UserController {
             e.printStackTrace();
             return "redirect:/admin/user?error=Không đọc được file";
         }
+
+        return "redirect:/admin/user";
+    }
+
+    @PostMapping("admin/user/add-random-ai")
+    public String addRandomCustomer() {
+        RegisterDTO dto = aiCustomerService.generateRandomCustomer();
+
+        User user = new User();
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setAddress(dto.getAddress());
+        user.setAvatar(dto.getAvatar());
+        user.setPassword(passwordEncoder.encode("123456")); // mật khẩu mặc định
+
+        Role customerRole = roleRepository.findByName("USER");
+        if (customerRole == null) {
+            throw new RuntimeException("Role CUSTOMER chưa có");
+        }
+        user.setRole(customerRole);
+
+        userService.handleSaveUser(user);
 
         return "redirect:/admin/user";
     }
