@@ -1,6 +1,7 @@
 package vn.java.laptopshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,5 +38,11 @@ public class UserService {
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
                 Sort.by(Sort.Direction.DESC, "id"));
         return userRepository.findAll(sortedPageable);
+    }
+
+    // Tìm người dùng theo ID
+    public User findUserById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElse(null);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -194,6 +195,19 @@ public class UserController {
         userService.handleSaveUser(user);
 
         return "redirect:/admin/user";
+    }
+
+    @GetMapping("admin/user/{id}")
+    public String viewUserDetail(Model model, @PathVariable("id") Long id) {
+        User user = userService.findUserById(id);
+
+        if (user == null) {
+            model.addAttribute("errorMessage", "Không tìm thấy khách hàng với ID = " + id);
+            return "admin/user/not-found"; // bạn có thể tạo 1 trang thông báo lỗi riêng
+        }
+
+        model.addAttribute("user", user);
+        return "admin/user/viewUserDetail";
     }
 
 }
