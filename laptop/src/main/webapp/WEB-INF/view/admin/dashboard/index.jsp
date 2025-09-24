@@ -35,13 +35,7 @@
                     <!-- Template Main CSS File -->
                     <link href="/assets/css/style.css" rel="stylesheet">
 
-                    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
                 </head>
 
                 <body>
@@ -326,11 +320,9 @@
                             class="bi bi-arrow-up-short"></i></a>
 
                     <!-- Vendor JS Files -->
-                    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-                    <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+
                     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                    <script src="/assets/vendor/chart.js/chart.umd.js"></script>
-                    <script src="/assets/vendor/echarts/echarts.min.js"></script>
+
                     <script src="/assets/vendor/quill/quill.js"></script>
                     <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
                     <script src="/assets/vendor/tinymce/tinymce.min.js"></script>

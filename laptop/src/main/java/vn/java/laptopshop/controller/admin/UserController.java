@@ -1,8 +1,11 @@
 package vn.java.laptopshop.controller.admin;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -221,6 +224,32 @@ public class UserController {
     public String deleteUserByIDConfirm(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
         return "redirect:/admin/user";
+    }
+
+    @GetMapping("admin/user/edit/{id}")
+    public String editUserByID(Model model, @PathVariable("id") Long id) {
+        User user = userService.findUserById(id);
+        model.addAttribute("editUser", user);
+        model.addAttribute("roles", roleRepository.findAll());
+        return "admin/user/editUser";
+    }
+
+    @PostMapping("admin/user/edit/{id}")
+    public String editUserByIDConfirm(Model model, @ModelAttribute("editUser") User user,
+            @RequestParam("image") MultipartFile imageFile) {
+        User currentUser = this.userService.findUserById(user.getId());
+        if (!imageFile.isEmpty()) {
+            String avatarUrl = uploadService.handleSaveUploadFile(imageFile, "avatar");
+            currentUser.setAvatar(avatarUrl);
+        }
+        if (currentUser != null) {
+            currentUser.setFullName(user.getFullName());
+            currentUser.setPhoneNumber(user.getPhoneNumber());
+            currentUser.setAddress(user.getAddress());
+            this.userService.handleSaveUser(currentUser);
+        }
+        return "redirect:/admin/user";
+
     }
 
 }

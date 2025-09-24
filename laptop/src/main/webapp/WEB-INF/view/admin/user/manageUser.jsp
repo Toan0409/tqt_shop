@@ -112,7 +112,7 @@
                                                         class="btn btn-sm btn-info text-white" title="Xem chi tiết">
                                                         <i class="bi bi-eye"></i>
                                                     </a>
-                                                    <a href="/admin/user/update/${user.id}"
+                                                    <a href="/admin/user/edit/${user.id}"
                                                         class="btn btn-sm btn-warning text-white" title="Chỉnh sửa">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </a>
@@ -155,6 +155,7 @@
             </main>
 
             <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="/assets/js/main.js"></script>
         </body>
 
         </html>
