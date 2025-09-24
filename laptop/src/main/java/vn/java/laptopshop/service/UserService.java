@@ -45,4 +45,9 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElse(null);
     }
+
+    // Xoá người dùng theo ID
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

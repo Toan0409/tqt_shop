@@ -117,9 +117,7 @@
                                                         <i class="bi bi-pencil-square"></i>
                                                     </a>
                                                     <a href="/admin/user/delete/${user.id}"
-                                                        class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Bạn có chắc muốn xoá khách hàng này?');"
-                                                        title="Xoá">
+                                                        class="btn btn-sm btn-danger" title="Xoá">
                                                         <i class="bi bi-trash"></i>
                                                     </a>
                                                 </td>
