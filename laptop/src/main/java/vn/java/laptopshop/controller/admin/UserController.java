@@ -193,7 +193,7 @@ public class UserController {
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setAddress(dto.getAddress());
-        user.setAvatar(dto.getAvatar());
+        user.setAvatar(null);
         user.setPassword(passwordEncoder.encode("123456")); // mật khẩu mặc định
 
         Role customerRole = roleRepository.findByName("USER");

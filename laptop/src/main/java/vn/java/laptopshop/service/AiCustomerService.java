@@ -23,17 +23,18 @@ public class AiCustomerService {
     public RegisterDTO generateRandomCustomer() {
         String modelName = "gemini-2.0-flash"; // có thể dùng gemini-1.5-flash nếu muốn
         String prompt = """
-                Bạn là một AI chuyên tạo dữ liệu khách hàng Việt Nam giả lập.
+                                Bạn là một AI chuyên tạo dữ liệu khách hàng Việt Nam giả lập.
                 Hãy trả về một JSON với các trường sau:
                 {
-                  "fullName": "Họ và tên ngẫu nhiên",
-                  "email": "Email hợp lệ",
-                  "phoneNumber": "Số điện thoại Việt Nam",
-                  "address": "Địa chỉ ở Việt Nam",
+                  "fullName": "Họ và tên tiếng Việt đa dạng (cả nam và nữ, có họ, tên đệm, tên chính; không trùng lặp nhiều; có thể mang phong cách Bắc, Trung, Nam)",
+                  "email": "Email hợp lệ, phù hợp với tên (không trùng lặp)",
+                  "phoneNumber": "Số điện thoại Việt Nam (bắt đầu bằng 03, 05, 07, 08 hoặc 09, có 10 chữ số)",
+                  "address": "Địa chỉ ở Việt Nam (bao gồm số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố)",
                   "avatar": "Link ảnh avatar giả"
                 }
                 Chỉ trả JSON, không thêm chữ khác.
-                """;
+
+                                """;
 
         try {
             // gọi model trực tiếp
