@@ -77,7 +77,7 @@
 
                                                     <td class="text-center">
                                                         <!-- Nút Xem chi tiết -->
-                                                        <a href="${pageContext.request.contextPath}/admin/product/detail/${p.id}"
+                                                        <a href="${pageContext.request.contextPath}/admin/product/${p.id}"
                                                             class="btn btn-sm btn-info text-white"><i
                                                                 class="bi bi-eye"></i></a>
                                                         <!-- Nút Sửa -->

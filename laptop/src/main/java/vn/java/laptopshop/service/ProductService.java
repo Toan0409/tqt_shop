@@ -33,4 +33,9 @@ public class ProductService {
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
+
+    // Lấy sản phẩm theo ID
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
 }

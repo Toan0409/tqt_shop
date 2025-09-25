@@ -7,9 +7,11 @@ import javax.naming.Binding;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,5 +82,15 @@ public class ProductController {
             return "admin/product/addProduct";
         }
 
+    }
+
+    @GetMapping("admin/product/{id}")
+    public String viewProductDetails(Model model, @PathVariable("id") Long id) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return "error";
+        }
+        model.addAttribute("product", product);
+        return "admin/product/detailProduct";
     }
 }
