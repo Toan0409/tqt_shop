@@ -54,12 +54,19 @@ public class UserController {
 
     @GetMapping("/admin/user")
     public String showUserList(Model model,
-            @RequestParam(value = "page", defaultValue = "1") int page) {
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "keyword", required = false) String keyword) {
         if (page < 1)
             page = 1;
 
-        Pageable pageable = PageRequest.of(page - 1, 5);
-        Page<User> usersPage = userService.getAllUsersPaged(pageable);
+        Pageable pageable = PageRequest.of(page - 1, 10);
+        Page<User> usersPage;
+        if (keyword != null && !keyword.isEmpty()) {
+            usersPage = userService.searchUsersByKeyword(keyword, pageable);
+            model.addAttribute("keyword", keyword);
+        } else
+            usersPage = userService.getAllUsersPaged(pageable);
+
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", usersPage.getTotalPages());
         model.addAttribute("users1", usersPage.getContent());

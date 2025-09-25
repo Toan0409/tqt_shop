@@ -40,6 +40,13 @@ public class UserService {
         return userRepository.findAll(sortedPageable);
     }
 
+    // Tìm kiếm người dùng theo từ khoá (tên hoặc email) có phân trang
+    public Page<User> searchUsersByKeyword(String keyword, Pageable pageable) {
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "id"));
+        return userRepository.findByFullNameContainingIgnoreCase(keyword, sortedPageable);
+    }
+
     // Tìm người dùng theo ID
     public User findUserById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);

@@ -26,7 +26,7 @@ public class AiCustomerService {
                 Bạn là một AI chuyên tạo dữ liệu khách hàng Việt Nam giả lập.
                 Hãy trả về một JSON với các trường sau:
                 {
-                  "fullName": "Họ và tên",
+                  "fullName": "Họ và tên ngẫu nhiên",
                   "email": "Email hợp lệ",
                   "phoneNumber": "Số điện thoại Việt Nam",
                   "address": "Địa chỉ ở Việt Nam",
