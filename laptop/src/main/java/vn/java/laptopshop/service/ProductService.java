@@ -29,4 +29,8 @@ public class ProductService {
     public Page<Product> searchProductsByName(String keyword, Pageable pageable) {
         return productRepository.findByNameContainingIgnoreCase(keyword, pageable);
     }
+
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
 }
