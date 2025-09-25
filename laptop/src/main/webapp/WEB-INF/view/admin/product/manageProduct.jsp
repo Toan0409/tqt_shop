@@ -33,6 +33,18 @@
                                 <h5 class="card-title">Danh sách sản phẩm</h5>
 
                                 <div class="table-responsive">
+
+                                    <form class="row g-2 mb-3" method="get" action="/admin/product">
+                                        <div class="col-md-4">
+                                            <input type="text" name="keyword" class="form-control"
+                                                placeholder="Tìm kiếm sản phẩm..." value="${param.keyword}">
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <button type="submit" class="btn btn-outline-success">
+                                                <i class="bi bi-search"></i> Tìm kiếm
+                                            </button>
+                                        </div>
+                                    </form>
                                     <table class="table table-bordered table-hover align-middle">
                                         <thead class="table-light text-center">
                                             <tr>
