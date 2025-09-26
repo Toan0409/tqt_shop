@@ -86,9 +86,7 @@
                                                                 class="bi bi-pencil"></i></a>
                                                         <!-- Nút Xóa -->
                                                         <a href="${pageContext.request.contextPath}/admin/product/delete/${p.id}"
-                                                            class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
-                                                            <i class="bi bi-trash"></i>
+                                                            class="btn btn-sm btn-danger"> <i class="bi bi-trash"></i>
                                                         </a>
                                                     </td>
                                                 </tr>

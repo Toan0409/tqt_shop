@@ -93,4 +93,54 @@ public class ProductController {
         model.addAttribute("product", product);
         return "admin/product/detailProduct";
     }
+
+    @GetMapping("admin/product/edit/{id}")
+    public String showEditProductForm(Model model, @PathVariable("id") Long id) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return "error";
+        }
+        model.addAttribute("product", product);
+        return "admin/product/editProduct";
+    }
+
+    @PostMapping("admin/product/edit/{id}")
+    public String editProduct(Model model, @PathVariable("id") Long id,
+            @ModelAttribute("product") Product updatedProduct,
+            BindingResult bindingResult,
+            @RequestParam("imageFile") MultipartFile imageFile) {
+
+        if (bindingResult.hasErrors()) {
+            return "admin/product/editProduct";
+        }
+
+        try {
+            Product existingProduct = productService.getProductById(id);
+            if (existingProduct == null) {
+                return "error";
+            }
+
+            if (!imageFile.isEmpty()) {
+                String filename = uploadService.handleSaveUploadFile(imageFile, "products");
+                if (filename == null) {
+                    return "error";
+                }
+                existingProduct.setImage(filename);
+            }
+
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setPrice(updatedProduct.getPrice());
+            existingProduct.setDetailDesc(updatedProduct.getDetailDesc());
+            existingProduct.setShortDesc(updatedProduct.getShortDesc());
+            existingProduct.setTarget(updatedProduct.getTarget());
+            existingProduct.setQuantity(updatedProduct.getQuantity());
+            existingProduct.setFactory(updatedProduct.getFactory());
+
+            productService.saveProduct(existingProduct);
+            return "redirect:/admin/product";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error updating product: " + e.getMessage());
+            return "admin/product/editProduct";
+        }
+    }
 }
