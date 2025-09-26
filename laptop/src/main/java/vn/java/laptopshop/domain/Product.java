@@ -1,9 +1,15 @@
 package vn.java.laptopshop.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -11,14 +17,34 @@ public class Product {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Tên sản phẩm không được để trống")
+    @Size(max = 255, message = "Tên sản phẩm không được dài quá 255 ký tự")
     private String name;
+
+    @NotNull(message = "Giá không được để trống")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Giá phải lớn hơn 0")
     private Double price;
+
+    @NotBlank(message = "Ảnh không được để trống")
     private String image;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
+    @Size(max = 2000, message = "Mô tả chi tiết không được dài quá 2000 ký tự")
     private String detailDesc;
+
+    @Size(max = 500, message = "Mô tả ngắn không được dài quá 500 ký tự")
     private String shortDesc;
+
+    @Min(value = 0, message = "Số lượng đã bán không được âm")
     private long sold;
+
+    @Min(value = 0, message = "Số lượng tồn kho không được âm")
     private long quantity;
+
+    @NotBlank(message = "Hãng sản xuất không được để trống")
     private String factory;
+
     private String target;
 
     public Long getId() {
@@ -111,7 +137,9 @@ public class Product {
 }
 
 // dữ liệu
-// INSERT INTO products (id, detail_desc, factory, image, name, price, quantity,
+// INSERT INTO
+
+// products (id, detail_desc, factory, image, name, price, quantity,
 // short_desc, sold, target) VALUES
 // (1, 'Laptop Dell Inspiron 15 với chip Intel i5 thế hệ 12, RAM 8GB, SSD
 // 512GB.', 'Dell', 'dell-inspiron.jpg', 'Laptop Dell Inspiron 15', 15000000,
@@ -165,6 +193,7 @@ public class Product {
 // (18, 'Bàn phím cơ không dây, hỗ trợ nhiều thiết bị.', 'Keychron',
 // 'keychron-k6.jpg', 'Bàn phím Keychron K6', 2800000, 25, 'Bàn phím cơ mini',
 // 120, 'Developer'),
-// ('Laptop Dell Inspiron 15 với chip Intel i5 thế hệ 12, RAM 8GB, SSD 512GB.',
+// (19,'Laptop Dell Inspiron 15 với chip Intel i5 thế hệ 12, RAM 8GB, SSD
+// 512GB.',
 // 'Dell', 'dell-inspiron.jpg', 'Laptop Dell Inspiron 15', 15000000, 50, 'Laptop
 // văn phòng giá rẻ', 120, 'Sinh viên');
