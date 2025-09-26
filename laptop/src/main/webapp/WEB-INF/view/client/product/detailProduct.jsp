@@ -83,6 +83,12 @@
                 <jsp:include page="/WEB-INF/view/client/layout/header.jsp" />
 
                 <main class="container my-5">
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Chi tiết sản phẩm</li>
+                        </ol>
+                    </nav>
                     <div class="row g-4">
                         <!-- Gallery -->
                         <div class="col-md-6">

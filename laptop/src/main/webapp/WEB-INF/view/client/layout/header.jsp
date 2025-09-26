@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <div class="d-flex align-items-center justify-content-between">
-                    <a href="${pageContext.request.contextPath}/admin/dashboard" class="logo d-flex align-items-center">
+                    <a href="/" class="logo d-flex align-items-center">
                         <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="">
                         <span class="d-none d-lg-block">T-Shop</span>
                     </a>
@@ -18,7 +18,7 @@
                         <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart">Giỏ
                                 hàng</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#">Đăng ký</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register">Đăng ký</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Đăng nhập</a></li>
                     </ul>
                 </div>

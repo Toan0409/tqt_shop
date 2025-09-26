@@ -9,15 +9,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import vn.java.laptopshop.domain.Role;
 import vn.java.laptopshop.domain.User;
+import vn.java.laptopshop.domain.dto.RegisterDTO;
+import vn.java.laptopshop.repository.RoleRepository;
 import vn.java.laptopshop.repository.UserRepository;
 
 @Service
 public class UserService {
+
+    private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public User handleSaveUser(User user) {
@@ -56,5 +62,22 @@ public class UserService {
     // Xoá người dùng theo ID
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    // convert RegisterDTO to User
+    public User convertToUser(RegisterDTO registerDTO) {
+        User user = new User();
+        user.setFullName(registerDTO.getFullName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+        user.setPhoneNumber(registerDTO.getPhoneNumber());
+        user.setAddress(registerDTO.getAddress());
+
+        return user;
+    }
+
+    // Tìm vai trò theo tên
+    public Role findRoleByName(String roleName) {
+        return roleRepository.findByName(roleName);
     }
 }
