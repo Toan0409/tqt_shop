@@ -3,7 +3,9 @@ package vn.java.laptopshop.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import vn.java.laptopshop.domain.Product;
@@ -23,7 +25,9 @@ public class ProductService {
 
     // phân trang và tìm kiếm
     public Page<Product> getAllProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "id"));
+        return productRepository.findAll(sortedPageable);
     }
 
     public Page<Product> searchProductsByName(String keyword, Pageable pageable) {
@@ -37,5 +41,10 @@ public class ProductService {
     // Lấy sản phẩm theo ID
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    // Xoá sản phẩm theo ID
+    public void deleteProductById(Long id) {
+        productRepository.deleteById(id);
     }
 }

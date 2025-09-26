@@ -143,4 +143,17 @@ public class ProductController {
             return "admin/product/editProduct";
         }
     }
+
+    @GetMapping("admin/product/delete/{id}")
+    public String showDeleteProduct(@PathVariable("id") Long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "admin/product/deleteProduct";
+    }
+
+    @PostMapping("admin/product/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteProductById(id);
+        return "redirect:/admin/product";
+    }
 }

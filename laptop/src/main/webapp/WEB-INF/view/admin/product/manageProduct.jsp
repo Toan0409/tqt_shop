@@ -69,8 +69,7 @@
                                                     </td>
                                                     <td>${p.name}</td>
                                                     <td class="text-end">
-                                                        <fmt:formatNumber value="${p.price}" type="currency"
-                                                            currencySymbol="₫" />
+                                                        <fmt:formatNumber value="${p.price}" currencySymbol="₫" />
                                                     </td>
                                                     <td class="text-center">${p.quantity}</td>
                                                     <td>${p.factory}</td>
