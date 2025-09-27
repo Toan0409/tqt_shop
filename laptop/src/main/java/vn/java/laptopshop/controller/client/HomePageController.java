@@ -46,18 +46,32 @@ public class HomePageController {
     }
 
     @PostMapping("/register")
-    public String registerAccount(RegisterDTO registerDTO,
-            Model model,
-            BindingResult bindingResult) {
+    public String registerAccount(
+            @ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            // Quay lại form và hiển thị lỗi
+            return "client/auth/registerAccount";
+        }
+
+        if (userService.isEmailExists(registerDTO.getEmail())) {
+            model.addAttribute("emailError", "Email đã được sử dụng");
+            return "client/auth/registerAccount";
+        }
+
         User user = userService.convertToUser(registerDTO);
-        user.setRole(userService.findRoleByName("USER")); // Mặc định vai trò là USER
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // Mã hoá mật khẩu
+        user.setRole(userService.findRoleByName("USER"));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.handleSaveUser(user);
+
         return "redirect:/login";
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String getLoginPage(Model model) {
+        model.addAttribute("loginUser", new User());
         return "client/auth/login";
     }
 
