@@ -40,24 +40,30 @@
                         <div class="col-md-6 bg-white p-5 form-card">
                             <h3 class="mb-4 text-center text-primary">Đăng nhập tài khoản</h3>
 
-                            <form:form method="post" action="${pageContext.request.contextPath}/login"
+                            <form method="post" action="${pageContext.request.contextPath}/login"
                                 modelAttribute="loginUser">
+                                <c:if test="${param.error != null}">
+                                    <div class="my-2" style="color: red;">Tài khoản hoặc mật khẩu không hợp lệ</div>
+                                </c:if>
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <form:input path="email" type="email" class="form-control" id="email"
+                                    <input name="username" type="email" class="form-control" id="email"
                                         placeholder="Nhập email" />
-                                    <form:errors path="email" cssClass="text-danger" />
+
                                 </div>
 
                                 <!-- Mật khẩu -->
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Mật khẩu</label>
-                                    <form:password path="password" class="form-control" id="password"
+                                    <input type="password" name="password" class="form-control" id="password"
                                         placeholder="Nhập mật khẩu" />
-                                    <form:errors path="password" cssClass="text-danger" />
+
                                 </div>
 
+                                <div>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                </div>
 
                                 <!-- Nút đăng nhập -->
                                 <div class="d-grid mb-3">
@@ -71,7 +77,7 @@
                                         Đăng ký ngay
                                     </a>
                                 </p>
-                            </form:form>
+                            </form>
                         </div>
                     </div>
                 </div>

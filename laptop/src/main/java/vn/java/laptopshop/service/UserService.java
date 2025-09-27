@@ -59,6 +59,11 @@ public class UserService {
         return optionalUser.orElse(null);
     }
 
+    // Tìm người dùng theo email
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
     // Xoá người dùng theo ID
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
