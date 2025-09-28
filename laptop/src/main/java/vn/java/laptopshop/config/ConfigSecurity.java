@@ -58,6 +58,14 @@ public class ConfigSecurity {
         }
 
         @Bean
+        public SpringSessionRememberMeServices rememberMeServices() {
+                SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+                rememberMeServices.setAlwaysRemember(true);
+
+                return rememberMeServices;
+        }
+
+        @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
@@ -71,7 +79,15 @@ public class ConfigSecurity {
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated())
+                                .sessionManagement((sessionManagement) -> sessionManagement
+                                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                                                .invalidSessionUrl("/logout?expired")
+                                                .maximumSessions(1)
+                                                .maxSessionsPreventsLogin(false))
 
+                                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+                                .rememberMe(me -> me
+                                                .rememberMeServices(rememberMeServices()))
                                 .formLogin(formLogin -> formLogin
                                                 .loginPage("/login")
                                                 .permitAll()
