@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import jakarta.servlet.DispatcherType;
@@ -52,13 +53,19 @@ public class ConfigSecurity {
         }
 
         @Bean
+        public AuthenticationSuccessHandler customSuccessHandler() {
+                return new CustomSucessHandler();
+        }
+
+        @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .dispatcherTypeMatchers(DispatcherType.FORWARD,
                                                                 DispatcherType.ERROR)
                                                 .permitAll()
-                                                .requestMatchers("/", "/login", "/register", "/resources/**",
+                                                .requestMatchers("/", "/login", "/register", "/product/**",
+                                                                "/resources/**",
                                                                 "/assets/**",
                                                                 "/WEB-INF/view/client/**")
                                                 .permitAll()
@@ -68,6 +75,7 @@ public class ConfigSecurity {
                                 .formLogin(formLogin -> formLogin
                                                 .loginPage("/login")
                                                 .permitAll()
+                                                .successHandler(customSuccessHandler())
                                                 .failureUrl("/login?error"))
                                 .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"));
 
