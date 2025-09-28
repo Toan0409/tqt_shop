@@ -55,15 +55,20 @@ public class ConfigSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                DispatcherType.ERROR)
+                        .permitAll()
                         .requestMatchers("/", "/login", "/register", "/resources/**", "/assets/**",
                                 "/WEB-INF/view/client/**")
                         .permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .permitAll());
+                        .permitAll()
+                        .failureUrl("/login?error"))
+                .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"));
 
         return http.build();
     }

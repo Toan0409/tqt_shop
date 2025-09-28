@@ -45,6 +45,9 @@
                                 <c:if test="${param.error != null}">
                                     <div class="my-2" style="color: red;">Tài khoản hoặc mật khẩu không hợp lệ</div>
                                 </c:if>
+                                <c:if test="${param.logout != null}">
+                                    <div class="my-2" style="color: green;">Đăng xuất thành công</div>
+                                </c:if>
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
