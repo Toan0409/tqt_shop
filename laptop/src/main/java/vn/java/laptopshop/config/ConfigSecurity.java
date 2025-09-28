@@ -74,6 +74,7 @@ public class ConfigSecurity {
                                                 .permitAll()
                                                 .requestMatchers("/", "/login", "/register", "/product/**",
                                                                 "/resources/**",
+                                                                "/images/**",
                                                                 "/assets/**",
                                                                 "/WEB-INF/view/client/**")
                                                 .permitAll()

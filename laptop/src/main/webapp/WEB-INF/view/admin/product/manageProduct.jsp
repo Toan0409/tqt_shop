@@ -63,7 +63,7 @@
                                                 <tr>
                                                     <td class="text-center">${p.id}</td>
                                                     <td class="text-center">
-                                                        <img src="${pageContext.request.contextPath}/resources/images/products/${p.image}"
+                                                        <img src="${pageContext.request.contextPath}/images/products/${p.image}"
                                                             alt="${p.name}" class="img-thumbnail"
                                                             style="width: 70px; height: 70px; object-fit: cover;">
                                                     </td>

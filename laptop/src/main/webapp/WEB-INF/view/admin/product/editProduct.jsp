@@ -41,9 +41,14 @@
                                         <!-- Giá -->
                                         <div class="mb-3">
                                             <label class="form-label">Giá (VNĐ)</label>
-                                            <form:input path="price" type="number" cssClass="form-control"
-                                                placeholder="Nhập giá" required="true" />
+                                            <div class="input-group">
+                                                <form:input path="price" type="number" cssClass="form-control"
+                                                    placeholder="Nhập giá" required="true" />
+                                                <span class="input-group-text">₫</span>
+                                            </div>
                                         </div>
+
+
 
                                         <!-- Ảnh -->
                                         <div class="mb-3">
@@ -51,7 +56,7 @@
                                             <input type="file" name="imageFile" class="form-control" accept="image/*">
                                             <c:if test="${not empty product.image}">
                                                 <div class="mt-2">
-                                                    <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
+                                                    <img src="${pageContext.request.contextPath}/images/products/${product.image}"
                                                         alt="Ảnh sản phẩm" width="120" class="img-thumbnail">
                                                 </div>
                                             </c:if>

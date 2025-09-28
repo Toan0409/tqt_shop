@@ -20,7 +20,7 @@ public class UploadService {
 
     public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
         try {
-            String realPath = servletContext.getRealPath("/resources/images/");
+            String realPath = servletContext.getRealPath("/images/");
             File dir = new File(realPath + File.separator + targetFolder);
             if (!dir.exists()) {
                 dir.mkdirs();

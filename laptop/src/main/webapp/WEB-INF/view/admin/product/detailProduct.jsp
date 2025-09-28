@@ -27,7 +27,7 @@
                             <div class="row">
                                 <!-- Hình ảnh -->
                                 <div class="col-md-5 text-center">
-                                    <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
+                                    <img src="${pageContext.request.contextPath}/images/products/${product.image}"
                                         class="img-fluid rounded border" alt="${product.name}" width="400">
                                 </div>
 

@@ -94,11 +94,11 @@
                         <div class="col-md-6">
                             <div class="product-gallery text-center mb-3">
                                 <img id="mainImage"
-                                    src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
+                                    src="${pageContext.request.contextPath}/images/products/${product.image}"
                                     alt="${product.name}" class="img-fluid rounded border">
                             </div>
                             <div class="d-flex justify-content-center gap-2 thumbs">
-                                <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
+                                <img src="${pageContext.request.contextPath}/images/products/${product.image}"
                                     onclick="changeImage(this.src)" alt="thumb">
                             </div>
                         </div>

@@ -29,7 +29,7 @@
                         <div class="col-xl-4">
                             <div class="card">
                                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                                    <img src="${pageContext.request.contextPath}/resources/images/avatar/${user.avatar}"
+                                    <img src="${pageContext.request.contextPath}/images/avatar/${user.avatar}"
                                         alt="Avatar" class="rounded-circle" width="150" height="150">
                                     <h2>${user.fullName}</h2>
                                     <h6 class="text-muted">${user.role.name}</h6>

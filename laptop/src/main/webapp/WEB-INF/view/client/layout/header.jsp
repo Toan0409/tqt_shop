@@ -40,16 +40,54 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button"
                                         data-bs-toggle="dropdown">
                                         <i class="bi bi-person-circle me-1"></i>
-                                        ${pageContext.request.userPrincipal.name}
+                                        ${sessionScope.fullName}
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                                        <li><a class="dropdown-item" href="#">Tài khoản của tôi</a></li>
+                                    <ul
+                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile shadow-lg border-0 rounded-3">
+                                        <!-- Avatar + thông tin -->
+                                        <li class="dropdown-header text-center">
+                                            <img src="/images/avatar/${sessionScope.avatar}" alt="Avatar"
+                                                class="rounded-circle mb-2"
+                                                style="width: 70px; height: 70px; object-fit: cover;">
+                                            <h6 class="mb-0">
+                                                <c:out value="${sessionScope.fullName}" />
+                                            </h6>
+                                            <small class="text-muted">Thành viên</small>
+                                        </li>
+
                                         <li>
-                                            <form action="${pageContext.request.contextPath}/logout" method="post"
-                                                style="display:inline;">
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <!-- Hồ sơ -->
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="/admin">
+                                                <i class="bi bi-person me-2"></i>
+                                                <span>Hồ sơ của tôi</span>
+                                            </a>
+                                        </li>
+
+                                        <!-- Cài đặt -->
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="/admin">
+                                                <i class="bi bi-gear me-2"></i>
+                                                <span>Cài đặt</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+
+                                        <!-- Đăng xuất -->
+                                        <li>
+                                            <form action="/logout" method="post" class="m-0">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                     value="${_csrf.token}" />
-                                                <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                                <button class="dropdown-item d-flex align-items-center">
+                                                    <i class="bi bi-box-arrow-right me-2"></i>
+                                                    <span>Đăng xuất</span>
+                                                </button>
                                             </form>
                                         </li>
                                     </ul>

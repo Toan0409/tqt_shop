@@ -6,6 +6,7 @@ import javax.naming.Binding;
 
 import vn.java.laptopshop.domain.dto.RegisterDTO;
 
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vn.java.laptopshop.domain.Product;
 import vn.java.laptopshop.domain.User;
@@ -36,6 +39,7 @@ public class HomePageController {
     public String home(Model model) {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("newProducts", products);
+
         return "client/dashboard/index";
     }
 

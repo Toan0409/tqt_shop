@@ -172,52 +172,64 @@
                     </li><!-- End Messages Nav -->
 
                     <li class="nav-item dropdown pe-3">
-
-                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
-                            data-bs-toggle="dropdown">
-                            <img src="/assets/img/user1.png" alt="Profile" class="rounded-circle">
-                            <span class="d-none d-md-block dropdown-toggle ps-2">
-                                <c:out value="${pageContext.request.userPrincipal.name}" />
+                        <!-- Chỉ hiển thị tên -->
+                        <a class="nav-link nav-profile d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                            <span class="fw-semibold">
+                                <c:out value="${sessionScope.fullName}" />
                             </span>
-                        </a><!-- End Profile Image Icon -->
+                            <i class="bi bi-caret-down-fill ms-1 small"></i>
+                        </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-
+                        <!-- Dropdown -->
+                        <ul
+                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile shadow-lg border-0 rounded-3">
+                            <!-- Avatar + thông tin -->
+                            <li class="dropdown-header text-center">
+                                <img src="/images/avatar/${sessionScope.avatar}" alt="Avatar"
+                                    class="rounded-circle mb-2" style="width: 70px; height: 70px; object-fit: cover;">
+                                <h6 class="mb-0">
+                                    <c:out value="${sessionScope.fullName}" />
+                                </h6>
+                                <small class="text-muted">Thành viên</small>
+                            </li>
 
                             <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <!-- Hồ sơ -->
+                            <li>
                                 <a class="dropdown-item d-flex align-items-center" href="/admin">
-                                    <i class="bi bi-person"></i>
+                                    <i class="bi bi-person me-2"></i>
                                     <span>Hồ sơ của tôi</span>
                                 </a>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
 
+                            <!-- Cài đặt -->
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" href="/admin">
-                                    <i class="bi bi-gear"></i>
+                                    <i class="bi bi-gear me-2"></i>
                                     <span>Cài đặt</span>
                                 </a>
                             </li>
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
 
-
-
+                            <!-- Đăng xuất -->
                             <li>
-                                <form action="/logout" method="post">
+                                <form action="/logout" method="post" class="m-0">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                     <button class="dropdown-item d-flex align-items-center">
-                                        <i class="bi bi-box-arrow-right"></i>
+                                        <i class="bi bi-box-arrow-right me-2"></i>
                                         <span>Đăng xuất</span>
                                     </button>
                                 </form>
                             </li>
+                        </ul>
+                    </li>
 
-                        </ul><!-- End Profile Dropdown Items -->
-                    </li><!-- End Profile Nav -->
 
                 </ul>
             </nav><!-- End Icons Navigation -->

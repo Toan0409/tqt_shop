@@ -98,7 +98,7 @@
                                             <c:choose>
                                                 <c:when test="${not empty editUser.avatar}">
                                                     <img id="avatarPreview"
-                                                        src="${pageContext.request.contextPath}/resources/images/avatar/${editUser.avatar}"
+                                                        src="${pageContext.request.contextPath}/images/avatar/${editUser.avatar}"
                                                         alt="Ảnh đại diện" style="max-height: 180px;"
                                                         class="img-thumbnail shadow-sm" />
                                                 </c:when>

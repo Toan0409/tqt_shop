@@ -35,7 +35,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <c:if test="${not empty product.image}">
-                                                <img src="${pageContext.request.contextPath}/resources/images/products/${product.image}"
+                                                <img src="${pageContext.request.contextPath}/images/products/${product.image}"
                                                     alt="Ảnh sản phẩm" class="img-thumbnail" width="150">
                                             </c:if>
                                         </div>

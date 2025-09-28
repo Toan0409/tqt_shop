@@ -118,7 +118,7 @@
                         <c:forEach var="p" items="${newProducts}">
                             <div class="col">
                                 <div class="card product-card h-100 border-0 shadow-sm rounded-3">
-                                    <img src="${pageContext.request.contextPath}/resources/images/products/${p.image}"
+                                    <img src="${pageContext.request.contextPath}/images/products/${p.image}"
                                         class="card-img-top" alt="${p.name}">
                                     <div class="card-body d-flex flex-column">
                                         <h6 class="card-title text-truncate">
