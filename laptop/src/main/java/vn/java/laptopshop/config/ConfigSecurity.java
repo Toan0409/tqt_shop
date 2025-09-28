@@ -19,57 +19,58 @@ import vn.java.laptopshop.service.UserService;
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class ConfigSecurity {
-    // @Bean
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-    // Exception {
-    // http
-    // .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-    // .csrf(csrf -> csrf.disable())
-    // .formLogin(form -> form.disable())
-    // .httpBasic(basic -> basic.disable());
-    // return http.build();
-    // }
+        // @Bean
+        // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+        // Exception {
+        // http
+        // .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+        // .csrf(csrf -> csrf.disable())
+        // .formLogin(form -> form.disable())
+        // .httpBasic(basic -> basic.disable());
+        // return http.build();
+        // }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public BCryptPasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
-        return new CustomUserDetailsService(userService);
-    }
+        @Bean
+        public UserDetailsService userDetailsService(UserService userService) {
+                return new CustomUserDetailsService(userService);
+        }
 
-    @SuppressWarnings("deprecation")
-    @Bean
-    public DaoAuthenticationProvider authProvider(UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        // authProvider.setHideUserNotFoundExceptions(false);
-        return authProvider;
-    }
+        @SuppressWarnings("deprecation")
+        @Bean
+        public DaoAuthenticationProvider authProvider(UserDetailsService userDetailsService,
+                        PasswordEncoder passwordEncoder) {
+                DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+                authProvider.setUserDetailsService(userDetailsService);
+                authProvider.setPasswordEncoder(passwordEncoder);
+                // authProvider.setHideUserNotFoundExceptions(false);
+                return authProvider;
+        }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
-                                DispatcherType.ERROR)
-                        .permitAll()
-                        .requestMatchers("/", "/login", "/register", "/resources/**", "/assets/**",
-                                "/WEB-INF/view/client/**")
-                        .permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                                                DispatcherType.ERROR)
+                                                .permitAll()
+                                                .requestMatchers("/", "/login", "/register", "/resources/**",
+                                                                "/assets/**",
+                                                                "/WEB-INF/view/client/**")
+                                                .permitAll()
+                                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                                .anyRequest().authenticated())
 
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .permitAll()
-                        .failureUrl("/login?error"))
-                .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"));
+                                .formLogin(formLogin -> formLogin
+                                                .loginPage("/login")
+                                                .permitAll()
+                                                .failureUrl("/login?error"))
+                                .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"));
 
-        return http.build();
-    }
+                return http.build();
+        }
 }

@@ -6,7 +6,7 @@
             <ul class="sidebar-nav" id="sidebar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link " href="/admin/dashboard">
+                    <a class="nav-link " href="/admin">
                         <i class="bi bi-grid"></i>
                         <span>Doanh thu & Lợi nhuận</span>
                     </a>
