@@ -52,7 +52,9 @@
                                             <h6 class="mb-0">
                                                 <c:out value="${sessionScope.fullName}" />
                                             </h6>
-                                            <small class="text-muted">Thành viên</small>
+                                            <small class="text-muted">
+                                                <c:out value="${sessionScope.role}" />
+                                            </small>
                                         </li>
 
                                         <li>

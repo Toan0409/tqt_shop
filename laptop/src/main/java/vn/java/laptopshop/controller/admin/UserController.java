@@ -194,7 +194,7 @@ public class UserController {
 
         Role customerRole = roleRepository.findByName("USER");
         if (customerRole == null) {
-            throw new RuntimeException("Role CUSTOMER chưa có");
+            throw new RuntimeException("Role USER chưa có");
         }
         user.setRole(customerRole);
 

@@ -129,8 +129,11 @@
                                             <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true" /> đ
                                         </p>
                                         <div class="mt-auto d-flex gap-2">
-                                            <form action="${pageContext.request.contextPath}/cart/add" method="post"
-                                                class="d-inline">
+                                            <form
+                                                action="${pageContext.request.contextPath}/add-product-to-cart/${p.id}"
+                                                method="post" class="d-inline">
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
                                                 <input type="hidden" name="productId" value="${p.id}" />
                                                 <button type="submit" class="btn btn-sm btn-success">
                                                     <i class="bi bi-cart-plus"></i> Thêm

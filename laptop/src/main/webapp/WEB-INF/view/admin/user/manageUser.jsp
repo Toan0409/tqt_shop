@@ -48,6 +48,8 @@
                                         <li>
                                             <form action="/admin/user/add-by-upload-csv" method="post"
                                                 enctype="multipart/form-data" class="px-3 py-2">
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
                                                 <label for="csvFile" class="form-label small mb-1 fw-bold">
                                                     Tải từ CSV
                                                 </label>
@@ -62,6 +64,8 @@
                                         <!-- Thêm bằng AI -->
                                         <li>
                                             <form action="/admin/user/add-random-ai" method="post" class="px-3 py-2">
+                                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
                                                 <button type="submit" class="btn btn-sm btn-outline-success w-100">
                                                     <i class="bi bi-robot"></i> Thêm AI
                                                 </button>

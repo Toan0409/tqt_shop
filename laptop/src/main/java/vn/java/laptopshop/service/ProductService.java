@@ -1,6 +1,7 @@
 package vn.java.laptopshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,5 +47,9 @@ public class ProductService {
     // Xoá sản phẩm theo ID
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public Optional<Product> getProductsById(Long id) {
+        return productRepository.findById(id);
     }
 }
