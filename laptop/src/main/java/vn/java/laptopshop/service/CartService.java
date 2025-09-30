@@ -1,7 +1,7 @@
 package vn.java.laptopshop.service;
 
 import java.lang.StackWalker.Option;
-
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -88,4 +88,15 @@ public class CartService {
         }
 
     }
+
+    public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
+        for (CartDetail cartDetail : cartDetails) {
+            Optional<CartDetail> cd = this.cartDetailRepository.findById(cartDetail.getId());
+            if (cd.isPresent()) {
+                cd.get().setQuantity(cartDetail.getQuantity());
+                this.cartDetailRepository.save(cd.get());
+            }
+        }
+    }
+
 }

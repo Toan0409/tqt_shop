@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -65,5 +66,30 @@ public class CartControler {
         Long productId = id;
         this.cartService.removeProductFromCart(session, productId);
         return "redirect:/cart";
+    }
+
+    @PostMapping("/confirm-checkout")
+    public String getCheckOutPage(@ModelAttribute("cart") Cart cart) {
+        List<CartDetail> cartDetails = cart == null ? new java.util.ArrayList<CartDetail>() : cart.getCartDetails();
+        this.cartService.handleUpdateCartBeforeCheckout(cartDetails);
+        return "redirect:/checkout";
+    }
+
+    @GetMapping("/checkout")
+    public String checkout(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        User currentUser = new User();
+        Long id = (Long) session.getAttribute("id");
+        currentUser.setId(id);
+
+        Cart cart = this.cartService.fetchbyUser(currentUser);
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+        double totalPrice = 0.0;
+        for (CartDetail cartDetail : cartDetails) {
+            totalPrice += cartDetail.getProduct().getPrice() * cartDetail.getQuantity();
+        }
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
+        return "client/cart/checkout";
     }
 }

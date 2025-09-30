@@ -33,7 +33,7 @@
                             </c:if>
 
                             <c:if test="${not empty pageContext.request.userPrincipal}">
-                                <li class="nav-item"><a class="nav-link"
+                                <li class="nav-item active"><a class="nav-link"
                                         href="${pageContext.request.contextPath}/cart">Giỏ
                                         hàng</a></li>
                                 <li class="nav-item dropdown">
