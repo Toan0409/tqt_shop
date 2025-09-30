@@ -1,10 +1,12 @@
 package vn.java.laptopshop.service;
 
 import java.lang.StackWalker.Option;
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
 import vn.java.laptopshop.domain.Cart;
 import vn.java.laptopshop.domain.CartDetail;
 import vn.java.laptopshop.domain.Product;
@@ -65,5 +67,25 @@ public class CartService {
 
     public Cart fetchbyUser(User user) {
         return this.cartRepository.findByUser(user);
+    }
+
+    public void removeProductFromCart(HttpSession session, Long cartDetailID) {
+        Optional<CartDetail> cartDetailOpt = this.cartDetailRepository.findById(cartDetailID);
+        if (cartDetailOpt.isPresent()) {
+            Cart cart = cartDetailOpt.get().getCart();
+            cart.getCartDetails().remove(cartDetailOpt.get());
+            // lấy sống lượng sản phẩm cartdetail trong giỏ hàng và xoá toàn bộ và cập nhật
+            // lại số lượng trong cart
+            int updatedSum = cart.getSum() - (int) cartDetailOpt.get().getQuantity();
+
+            if (updatedSum > 0) {
+                cart.setSum(updatedSum);
+                this.cartRepository.save(cart);
+            } else {
+                this.cartRepository.delete(cart);
+
+            }
+        }
+
     }
 }

@@ -59,4 +59,11 @@ public class CartControler {
         return "client/cart/cart";
     }
 
+    @PostMapping("/delete-product-from-cart/{id}")
+    public String deleteProductFromCart(@PathVariable long id, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long productId = id;
+        this.cartService.removeProductFromCart(session, productId);
+        return "redirect:/cart";
+    }
 }
