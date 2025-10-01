@@ -3,12 +3,14 @@ package vn.java.laptopshop.controller.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -91,5 +93,34 @@ public class CartControler {
         model.addAttribute("cartDetails", cartDetails);
         model.addAttribute("totalPrice", totalPrice);
         return "client/cart/checkout";
+    }
+
+    @PostMapping("/checkout")
+    public String processCheckout(HttpServletRequest request,
+            @RequestParam("receiverName") String receiverName,
+            @RequestParam("receiverPhone") String receiverPhone,
+            @RequestParam("receiverAddress") String receiverAddress,
+            @RequestParam("totalPrice") double totalPrice,
+            @RequestParam("paymentMethod") String paymentMethod) {
+        HttpSession session = request.getSession();
+        session.setAttribute("receiverName", receiverName);
+        session.setAttribute("receiverPhone", receiverPhone);
+        session.setAttribute("receiverAddress", receiverAddress);
+        session.setAttribute("totalPrice", totalPrice);
+        session.setAttribute("paymentMethod", paymentMethod);
+        switch (paymentMethod) {
+            case "vnpay":
+                return "redirect:/payment/vnpay";
+            case "cod":
+                return "redirect:/payment/COD";
+
+            default:
+                return "redirect:/checkout-failed";
+        }
+    }
+
+    @GetMapping("/payment/COD")
+    public String processCODPayment() {
+        return "client/cart/thanks";
     }
 }

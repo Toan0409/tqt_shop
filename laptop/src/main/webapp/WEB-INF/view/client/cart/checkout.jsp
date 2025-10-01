@@ -83,7 +83,7 @@
 
                             <!-- Checkout Form -->
                             <c:if test="${not empty cartDetails}">
-                                <form:form action="/start-vnpay-payment" method="post" modelAttribute="cart">
+                                <form:form action="/checkout" method="post" modelAttribute="cart">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                     <input type="hidden" name="totalPrice" value="${totalPrice}" />
 
