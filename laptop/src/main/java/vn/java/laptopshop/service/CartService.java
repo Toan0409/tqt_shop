@@ -128,15 +128,18 @@ public class CartService {
                 order.setReceiverName(receiverName);
                 order.setReceiverAddress(receiverAddress);
                 order.setReceiverPhone(receiverPhone);
+                System.out.println("Payment method = " + paymentMethod);
                 switch (paymentMethod) {
-                    case "COD":
+                    case "cod":
                         order.setStatus("Chờ xác nhận");
                         break;
                     case "vnpay":
                         order.setStatus("Đã thanh toán");
                         break;
                     default:
+                        order.setStatus("Không xác định");
                         break;
+
                 }
 
                 double sum = 0;
