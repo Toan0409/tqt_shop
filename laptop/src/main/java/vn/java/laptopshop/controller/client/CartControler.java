@@ -120,7 +120,24 @@ public class CartControler {
     }
 
     @GetMapping("/payment/COD")
-    public String processCODPayment() {
+    public String processCODPayment(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User currentUser = new User();
+        Long id = (Long) session.getAttribute("id");
+        currentUser.setId(id);
+
+        String receiverName = (String) session.getAttribute("receiverName");
+        String receiverPhone = (String) session.getAttribute("receiverPhone");
+        String receiverAddress = (String) session.getAttribute("receiverAddress");
+        String paymentMethod = (String) session.getAttribute("paymentMethod");
+        this.cartService.handleOrder(
+                currentUser, session,
+                receiverName, receiverAddress, receiverPhone, paymentMethod);
+        return "redirect:/order-success";
+    }
+
+    @GetMapping("/order-success")
+    public String orderSuccess() {
         return "client/cart/thanks";
     }
 }

@@ -36,10 +36,10 @@ public class ConfigSecurity {
                 return new BCryptPasswordEncoder();
         }
 
-        @Bean
-        public UserDetailsService userDetailsService(UserService userService) {
-                return new CustomUserDetailsService(userService);
-        }
+//        @Bean
+//        public UserDetailsService userDetailsService(UserService userService) {
+//                return new CustomUserDetailsService(userService);
+//        }
 
         @SuppressWarnings("deprecation")
         @Bean
