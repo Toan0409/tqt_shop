@@ -144,6 +144,13 @@
                                                             <label class="form-check-label" for="paymentCOD">Thanh toán
                                                                 khi nhận hàng (COD)</label>
                                                         </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="paymentQRCODE" name="paymentMethod" value="qrcode">
+                                                            <label class="form-check-label" for="paymentQRCODE">Thanh
+                                                                toán
+                                                                bằng QRCODE</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div

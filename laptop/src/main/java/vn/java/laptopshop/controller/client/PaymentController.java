@@ -74,7 +74,27 @@ public class PaymentController {
                 return "redirect:/payment/vnpay-checkout?totalPrice=" + totalPrice;
             case "cod":
                 return "redirect:/payment/COD";
+            case "qrcode":
+                String bankBin = "970436"; // Vietcombank (ví dụ)
+                String accountNumber = "0123456789"; // Tài khoản nhận
+                String accountName = "CTY TNHH TSHOP";
+                String orderId = "HD" + System.currentTimeMillis();
+                String amount = String.format("%.0f", totalPrice);
+                String addInfo = "ThanhToanDonHang" + orderId;
 
+                // URL tạo mã QR từ VietQR.io
+                String qrUrl = "https://img.vietqr.io/image/"
+                        + bankBin + "-" + accountNumber
+                        + "-compact2.jpg?amount=" + amount
+                        + "&addInfo=" + addInfo
+                        + "&accountName=" + accountName;
+
+                // Lưu dữ liệu vào session hoặc model
+                session.setAttribute("qrUrl", qrUrl);
+                session.setAttribute("orderId", orderId);
+
+                // 👉 Chuyển hướng sang trang hiển thị QR
+                return "redirect:/payment/qr";
             default:
                 return "redirect:/checkout-failed";
         }
@@ -143,6 +163,23 @@ public class PaymentController {
 
         return "redirect:/checkout-failed";
 
+    }
+
+    @GetMapping("/payment/qr")
+    public String showQrPage(HttpSession session, Model model) {
+        String qrUrl = (String) session.getAttribute("qrUrl");
+        String orderId = (String) session.getAttribute("orderId");
+        Double totalPrice = (Double) session.getAttribute("totalPrice");
+
+        if (qrUrl == null || totalPrice == null) {
+            return "redirect:/checkout-failed";
+        }
+
+        model.addAttribute("qrUrl", qrUrl);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("totalPrice", totalPrice);
+
+        return "client/cart/payment_qr_confirm"; // JSP hiển thị mã QR
     }
 
     @GetMapping("/order-success")
