@@ -136,6 +136,9 @@ public class CartService {
                     case "vnpay":
                         order.setStatus("Đã thanh toán");
                         break;
+                    case "qrcode":
+                        order.setStatus("Chờ thanh toán");
+                        break;
                     default:
                         order.setStatus("Không xác định");
                         break;

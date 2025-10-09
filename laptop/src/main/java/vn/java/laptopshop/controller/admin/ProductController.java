@@ -66,6 +66,7 @@ public class ProductController {
             @RequestParam("imageFile") MultipartFile imageFile) {
 
         if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getAllErrors());
             return "admin/product/addProduct";
         }
         try {
@@ -78,6 +79,7 @@ public class ProductController {
             productService.saveProduct(product);
             return "redirect:/admin/product";
         } catch (Exception e) {
+            e.printStackTrace();
             model.addAttribute("errorMessage", "Error saving product: " + e.getMessage());
             return "admin/product/addProduct";
         }

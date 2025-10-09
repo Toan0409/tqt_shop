@@ -75,9 +75,9 @@ public class PaymentController {
             case "cod":
                 return "redirect:/payment/COD";
             case "qrcode":
-                String bankBin = "970436"; // Vietcombank (ví dụ)
-                String accountNumber = "0123456789"; // Tài khoản nhận
-                String accountName = "CTY TNHH TSHOP";
+                String bankBin = "970422";
+                String accountNumber = "0346818897";
+                String accountName = "TRAN QUOC TOAN";
                 String orderId = "HD" + System.currentTimeMillis();
                 String amount = String.format("%.0f", totalPrice);
                 String addInfo = "ThanhToanDonHang" + orderId;
@@ -89,11 +89,9 @@ public class PaymentController {
                         + "&addInfo=" + addInfo
                         + "&accountName=" + accountName;
 
-                // Lưu dữ liệu vào session hoặc model
                 session.setAttribute("qrUrl", qrUrl);
                 session.setAttribute("orderId", orderId);
 
-                // 👉 Chuyển hướng sang trang hiển thị QR
                 return "redirect:/payment/qr";
             default:
                 return "redirect:/checkout-failed";
@@ -180,6 +178,24 @@ public class PaymentController {
         model.addAttribute("totalPrice", totalPrice);
 
         return "client/cart/payment_qr_confirm"; // JSP hiển thị mã QR
+    }
+
+    @PostMapping("/payment/qr/confirm")
+    public String confirmQrPayment(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User currentUser = new User();
+        Long id = (Long) session.getAttribute("id");
+        currentUser.setId(id);
+
+        String receiverName = (String) session.getAttribute("receiverName");
+        String receiverPhone = (String) session.getAttribute("receiverPhone");
+        String receiverAddress = (String) session.getAttribute("receiverAddress");
+        String paymentMethod = (String) session.getAttribute("paymentMethod");
+
+        this.cartService.handleOrder(
+                currentUser, session,
+                receiverName, receiverAddress, receiverPhone, paymentMethod);
+        return "redirect:/order-success";
     }
 
     @GetMapping("/order-success")
