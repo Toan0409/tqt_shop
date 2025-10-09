@@ -9,21 +9,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import vn.java.laptopshop.domain.PasswordResetToken;
 import vn.java.laptopshop.domain.Role;
 import vn.java.laptopshop.domain.User;
 import vn.java.laptopshop.domain.dto.RegisterDTO;
+import vn.java.laptopshop.repository.PasswordResetTokenRepository;
 import vn.java.laptopshop.repository.RoleRepository;
 import vn.java.laptopshop.repository.UserRepository;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 @Service
 public class UserService {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final PasswordResetTokenRepository tokenRepository;
+    private final JavaMailSender mailSender;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository,
+            PasswordResetTokenRepository tokenRepository, JavaMailSender mailSender) {
         this.userRepository = userRepository;
+        this.mailSender = mailSender;
         this.roleRepository = roleRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     public User handleSaveUser(User user) {
@@ -84,5 +93,29 @@ public class UserService {
     // Tìm vai trò theo tên
     public Role findRoleByName(String roleName) {
         return roleRepository.findByName(roleName);
+    }
+
+    public void createPasswordResetToken(User user, String token) {
+        // Xóa token cũ nếu đã tồn tại
+        tokenRepository.findByUser(user).ifPresent(tokenRepository::delete);
+
+        // Sau đó tạo token mới
+        PasswordResetToken resetToken = new PasswordResetToken(token, user);
+        tokenRepository.save(resetToken);
+    }
+
+    public void sendPasswordResetEmail(User user, String appUrl, String token) {
+        String resetUrl = appUrl + "/update-password?id=" + user.getId() + "&token=" + token;
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setSubject("Đặt lại mật khẩu - TShop");
+        email.setText("Nhấn vào liên kết để đặt lại mật khẩu: \n" + resetUrl);
+        mailSender.send(email);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+
+        userRepository.save(user);
     }
 }

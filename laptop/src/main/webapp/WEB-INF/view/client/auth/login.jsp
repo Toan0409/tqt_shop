@@ -73,6 +73,13 @@
                                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
                                 </div>
 
+                                <p class="text-center mb-0">
+                                    <a href="${pageContext.request.contextPath}/forgot-password"
+                                        class="text-decoration-none">
+                                        Quên mật khẩu?
+                                    </a>
+                                </p>
+
 
                                 <p class="text-center">
                                     Chưa có tài khoản?

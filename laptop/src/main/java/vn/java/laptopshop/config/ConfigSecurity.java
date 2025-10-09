@@ -36,10 +36,10 @@ public class ConfigSecurity {
                 return new BCryptPasswordEncoder();
         }
 
-//        @Bean
-//        public UserDetailsService userDetailsService(UserService userService) {
-//                return new CustomUserDetailsService(userService);
-//        }
+        // @Bean
+        // public UserDetailsService userDetailsService(UserService userService) {
+        // return new CustomUserDetailsService(userService);
+        // }
 
         @SuppressWarnings("deprecation")
         @Bean
@@ -73,6 +73,8 @@ public class ConfigSecurity {
                                                                 DispatcherType.ERROR)
                                                 .permitAll()
                                                 .requestMatchers("/", "/login", "/register", "/product/**",
+                                                                "/forgot-password",
+                                                                "/update-password",
                                                                 "/resources/**",
                                                                 "/images/**",
                                                                 "/assets/**",
