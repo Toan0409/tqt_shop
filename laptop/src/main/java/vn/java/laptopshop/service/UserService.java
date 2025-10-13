@@ -17,6 +17,7 @@ import vn.java.laptopshop.repository.PasswordResetTokenRepository;
 import vn.java.laptopshop.repository.RoleRepository;
 import vn.java.laptopshop.repository.UserRepository;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.mail.SimpleMailMessage;
 
 @Service
@@ -26,13 +27,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository tokenRepository;
     private final JavaMailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
-            PasswordResetTokenRepository tokenRepository, JavaMailSender mailSender) {
+            PasswordResetTokenRepository tokenRepository, JavaMailSender mailSender, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mailSender = mailSender;
         this.roleRepository = roleRepository;
         this.tokenRepository = tokenRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User handleSaveUser(User user) {
@@ -96,10 +99,8 @@ public class UserService {
     }
 
     public void createPasswordResetToken(User user, String token) {
-        // Xóa token cũ nếu đã tồn tại
         tokenRepository.findByUser(user).ifPresent(tokenRepository::delete);
 
-        // Sau đó tạo token mới
         PasswordResetToken resetToken = new PasswordResetToken(token, user);
         tokenRepository.save(resetToken);
     }
@@ -114,8 +115,7 @@ public class UserService {
     }
 
     public void updatePassword(User user, String newPassword) {
-        user.setPassword(newPassword);
-
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
 }

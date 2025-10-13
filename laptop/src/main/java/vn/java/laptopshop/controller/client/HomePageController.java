@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import vn.java.laptopshop.domain.Product;
 import vn.java.laptopshop.domain.User;
@@ -119,26 +120,26 @@ public class HomePageController {
             return "redirect:/login?error=" + result;
         }
 
-        // Lưu user tạm vào session
-        User user = passwordResetTokenRepository.findByToken(token).getUser();
-        session.setAttribute("resetUser", user);
+        Long userId = passwordResetTokenRepository.findByToken(token).getUser().getId();
+        session.setAttribute("resetUserId", userId);
 
         return "client/auth/updatePassword";
     }
 
     // Cập nhật mật khẩu mới
     @PostMapping("/update-password")
+    @Transactional
     public String saveNewPassword(@RequestParam("password") String password, HttpSession session) {
-        User user = (User) session.getAttribute("resetUser");
-        if (user == null) {
+        Long userId = (Long) session.getAttribute("resetUserId");
+        if (userId == null) {
             return "redirect:/login";
         }
 
+        User user = userService.findUserById(userId);
         userService.updatePassword(user, password);
         passwordResetTokenRepository.deleteByUser(user);
-        session.removeAttribute("resetUser");
-
-        return "redirect:/login?resetSuccess";
+        session.removeAttribute("resetUserId");
+        return "redirect:/login?message=success";
     }
 
     @GetMapping("/access-denied")
