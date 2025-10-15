@@ -30,4 +30,14 @@ public class OrderService {
         return orderRepository.findById(orderId);
 
     }
+
+    public void updateOrder(Order order) {
+        Optional<Order> orderOpt = getOrderById(order.getOrderId());
+        if (orderOpt.isPresent()) {
+            Order currentOrder = orderOpt.get();
+            currentOrder.setStatus(order.getStatus());
+            this.orderRepository.save(currentOrder);
+        }
+    }
+
 }

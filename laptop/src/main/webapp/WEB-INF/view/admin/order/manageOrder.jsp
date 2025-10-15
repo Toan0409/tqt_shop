@@ -65,7 +65,7 @@
                                                             class="btn btn-sm btn-info text-white">
                                                             <i class="bi bi-eye"></i> Xem
                                                         </a>
-                                                        <a href="/admin/orders/edit/${order.orderId}"
+                                                        <a href="/admin/order/update/${order.orderId}"
                                                             class="btn btn-sm btn-warning">
                                                             <i class="bi bi-pencil"></i> Sửa
                                                         </a>

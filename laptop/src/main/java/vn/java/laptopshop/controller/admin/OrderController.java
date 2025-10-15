@@ -7,7 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.java.laptopshop.domain.Order;
@@ -48,4 +50,18 @@ public class OrderController {
         model.addAttribute("orderDetails", order.get().getOrderDetails());
         return "admin/order/detailOrder";
     }
+
+    @GetMapping("/admin/order/update/{orderId}")
+    public String getOrderUpdate(Model model, @PathVariable("orderId") Long orderId) {
+        Optional<Order> order = orderService.getOrderById(orderId);
+        model.addAttribute("newOrder", order.get());
+        return "admin/order/updateOrder";
+    }
+
+    @PostMapping("/admin/order/update")
+    public String handleOrderUpdate(Model model, @ModelAttribute("newOrder") Order order) {
+        this.orderService.updateOrder(order);
+        return "redirect:/admin/order";
+    }
+
 }
