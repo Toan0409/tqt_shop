@@ -1,10 +1,13 @@
 package vn.java.laptopshop.controller.admin;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.java.laptopshop.domain.Order;
@@ -36,5 +39,13 @@ public class OrderController {
         model.addAttribute("orders", ordersPage.getContent());
 
         return "admin/order/manageOrder";
+    }
+
+    @GetMapping("/admin/order/detail/{orderId}")
+    public String showOrderDetail(Model model, @PathVariable("orderId") Long orderId) {
+        Optional<Order> order = orderService.getOrderById(orderId);
+        model.addAttribute("order", order.get());
+        model.addAttribute("orderDetails", order.get().getOrderDetails());
+        return "admin/order/detailOrder";
     }
 }

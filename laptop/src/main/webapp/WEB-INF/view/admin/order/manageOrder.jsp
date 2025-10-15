@@ -61,7 +61,7 @@
                                                         </strong></td>
                                                     <td class="address-column">${order.status}</td>
                                                     <td class="text-center">
-                                                        <a href="/admin/orders/detail/${order.orderId}"
+                                                        <a href="/admin/order/detail/${order.orderId}"
                                                             class="btn btn-sm btn-info text-white">
                                                             <i class="bi bi-eye"></i> Xem
                                                         </a>

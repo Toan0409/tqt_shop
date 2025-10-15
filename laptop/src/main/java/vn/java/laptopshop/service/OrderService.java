@@ -1,5 +1,7 @@
 package vn.java.laptopshop.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +24,10 @@ public class OrderService {
                 org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC,
                         "orderId"));
         return orderRepository.findAll(sortedPageable);
+    }
+
+    public Optional<Order> getOrderById(Long orderId) {
+        return orderRepository.findById(orderId);
+
     }
 }
