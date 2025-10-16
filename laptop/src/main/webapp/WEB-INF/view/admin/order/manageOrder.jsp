@@ -77,6 +77,8 @@
                                                 </tr>
                                             </c:forEach>
 
+
+
                                             <c:if test="${empty orders}">
                                                 <tr>
                                                     <td colspan="7" class="text-center text-muted">Không có đơn hàng
@@ -87,6 +89,28 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item ${currentPage eq 1 ? 'disabled' : ''}">
+                                            <a class="page-link" href="/admin/order?page=${currentPage - 1}"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <c:forEach begin="1" end="${totalPages}" var="page">
+                                            <li class="page-item ${page eq currentPage ? 'active' : ''}">
+                                                <a class="page-link" href="/admin/order?page=${page}">${page}</a>
+                                            </li>
+                                        </c:forEach>
+                                        <li class="page-item ${currentPage eq totalPages ? 'disabled' : ''}">
+                                            <a class="page-link" href="/admin/order?page=${currentPage + 1}"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </section>
