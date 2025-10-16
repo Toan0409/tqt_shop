@@ -1,22 +1,29 @@
 package vn.java.laptopshop.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import vn.java.laptopshop.domain.Order;
+import vn.java.laptopshop.domain.OrderDetail;
+import vn.java.laptopshop.repository.OrderDetailRepository;
 import vn.java.laptopshop.repository.OrderRepository;
 
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository) {
         this.orderRepository = orderRepository;
+        this.orderDetailRepository = orderDetailRepository;
     }
 
     public Page<Order> getAllOrders(Pageable pageable) {
@@ -37,6 +44,21 @@ public class OrderService {
             Order currentOrder = orderOpt.get();
             currentOrder.setStatus(order.getStatus());
             this.orderRepository.save(currentOrder);
+        }
+    }
+
+    @Transactional
+    public void deleteOrderById(Long orderId) {
+        Optional<Order> orderOpt = orderRepository.findById(orderId);
+        if (orderOpt.isPresent()) {
+            Order currentOrder = orderOpt.get();
+
+            List<OrderDetail> orderDetails = currentOrder.getOrderDetails();
+            for (OrderDetail od : orderDetails) {
+                orderDetailRepository.deleteById(od.getId());
+            }
+
+            orderRepository.deleteById(orderId);
         }
     }
 

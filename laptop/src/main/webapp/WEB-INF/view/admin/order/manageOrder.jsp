@@ -69,8 +69,7 @@
                                                             class="btn btn-sm btn-warning">
                                                             <i class="bi bi-pencil"></i> Sửa
                                                         </a>
-                                                        <a href="/admin/orders/delete/${order.orderId}"
-                                                            onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này không?')"
+                                                        <a href="/admin/order/delete/${order.orderId}"
                                                             class="btn btn-sm btn-danger">
                                                             <i class="bi bi-trash"></i> Xóa
                                                         </a>

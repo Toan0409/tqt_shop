@@ -64,4 +64,17 @@ public class OrderController {
         return "redirect:/admin/order";
     }
 
+    @GetMapping("/admin/order/delete/{orderId}")
+    public String getOrderDelete(Model model, @PathVariable("orderId") Long orderId) {
+        model.addAttribute("id", orderId);
+        model.addAttribute("newOrder", new Order());
+        return "admin/order/deleteOrder";
+    }
+
+    @PostMapping("/admin/order/delete")
+    public String postDeleteOrder(@ModelAttribute("newOrder") Order order) {
+        this.orderService.deleteOrderById(order.getOrderId());
+        return "redirect:/admin/order";
+    }
+
 }
