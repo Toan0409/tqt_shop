@@ -28,10 +28,19 @@ public class OrderController {
 
     @GetMapping("/admin/order")
     public String showOrderList(Model model,
-            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "page", defaultValue = "1") Optional<String> pageOpt,
             @RequestParam(value = "keyword", required = false) String keyword) {
-        if (page < 1)
-            page = 1;
+        int page = 1;
+        if (pageOpt.isPresent()) {
+            try {
+                page = Integer.parseInt(pageOpt.get());
+                if (page < 1) {
+                    page = 1;
+                }
+            } catch (Exception e) {
+                page = 1;
+            }
+        }
 
         Pageable pageable = PageRequest.of(page - 1, 10);
         Page<Order> ordersPage;
