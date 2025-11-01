@@ -95,7 +95,10 @@
                                                             <i class="bi bi-currency-dollar"></i>
                                                         </div>
                                                         <div class="ps-3">
-                                                            <h6>${countRevenues} VNĐ</h6>
+                                                            <h6>
+                                                                <fmt:setLocale value="vi_VN" />
+                                                                <fmt:formatNumber value="${countRevenues}" />VNĐ
+                                                            </h6>
 
 
                                                         </div>
@@ -128,172 +131,102 @@
 
                                         </div><!-- End Customers Card -->
 
-                                        <!-- Reports -->
+
+
+                                        <!-- Recent Sales -->
                                         <div class="col-12">
-                                            <div class="card">
+                                            <div class="card recent-sales overflow-auto">
+
+
                                                 <div class="card-body">
-                                                    <h5 class="card-title">Báo cáo</h5>
+                                                    <h5 class="card-title">Đơn hàng gần đây </h5>
 
-                                                    <!-- ApexCharts CDN -->
-                                                    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+                                                    <table class="table table-borderless datatable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Khách hàng</th>
+                                                                <th scope="col">Số lượng</th>
+                                                                <th scope="col">Giá</th>
+                                                                <th scope="col">Trạng thái</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach var="order" items="${orders}">
+                                                                <%-- Tính tổng số lượng sản phẩm trong đơn hàng này --%>
+                                                                    <c:set var="totalQuantity" value="0" />
+                                                                    <c:forEach var="item" items="${order.orderDetails}">
+                                                                        <c:set var="totalQuantity"
+                                                                            value="${totalQuantity + item.quantity}" />
+                                                                    </c:forEach>
 
-                                                    <div class="container mt-5">
-                                                        <h3 class="text-center">Doanh thu theo sản phẩm</h3>
-                                                        <div id="productRevenueChart"></div>
-                                                    </div>
+                                                                    <tr>
+                                                                        <th scope="row"><a href="#">${order.orderId}</a>
+                                                                        </th>
+                                                                        <td>${order.receiverName}</td>
+                                                                        <td>${totalQuantity}</td>
+                                                                        <td>
+                                                                            <fmt:setLocale value="vi_VN" />
+                                                                            <fmt:formatNumber
+                                                                                value="${order.totalPrice}" />VNĐ
+
+                                                                        </td>
+                                                                        <td><span
+                                                                                class="badge bg-success">${order.status}</span>
+                                                                        </td>
+                                                                    </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+
                                                 </div>
+
                                             </div>
-                                        </div>
+                                        </div><!-- End Recent Sales -->
 
-                                        <c:if test="${not empty productRevenues}">
-                                            <script>
-                                                document.addEventListener("DOMContentLoaded", function () {
-                                                    var productNames = [
-                                                        <c:forEach var="item" items="${productRevenues}" varStatus="loop">
-                                                            "${item.productName}"<c:if test="${!loop.last}">,</c:if>
-                                                        </c:forEach>
-                                                    ];
-
-                                                    var productRevenues = [
-                                                        <c:forEach var="item" items="${productRevenues}" varStatus="loop">
-                                                            ${item.totalRevenue}<c:if test="${!loop.last}">,</c:if>
-                                                        </c:forEach>
-                                                    ];
-
-                                                    var options = {
-                                                        chart: {
-                                                            type: 'bar',
-                                                            height: 400
-                                                        },
-                                                        series: [{
-                                                            name: 'Doanh thu',
-                                                            data: productRevenues
-                                                        }],
-                                                        xaxis: {
-                                                            categories: productNames
-                                                        },
-                                                        dataLabels: {
-                                                            formatter: function (val) {
-                                                                return val.toLocaleString() + " đ";
-                                                            }
-                                                        },
-                                                        tooltip: {
-                                                            y: {
-                                                                formatter: function (val) {
-                                                                    return val.toLocaleString() + " đ";
-                                                                }
-                                                            }
-                                                        }
-                                                    };
-
-                                                    var chart = new ApexCharts(document.querySelector("#productRevenueChart"), options);
-                                                    chart.render();
-                                                });
-                                            </script>
-                                        </c:if>
-
-                                        <c:if test="${empty productRevenues}">
-                                            <p class="text-center text-muted mt-4">Không có dữ liệu doanh thu để hiển
-                                                thị.</p>
-                                        </c:if>
-
-                                    </div> <!-- End Card Body -->
-                                </div> <!-- End Card -->
-                            </div> <!-- End Column -->
+                                        <!-- Top Selling -->
+                                        <div class="col-12">
+                                            <div class="card top-selling overflow-auto">
 
 
 
+                                                <div class="card-body pb-0">
+                                                    <h5 class="card-title">Sản phẩm bán chạy </h5>
 
-                            <!-- Recent Sales -->
-                            <div class="col-12">
-                                <div class="card recent-sales overflow-auto">
+                                                    <table class="table table-borderless">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th scope="col">Sản phẩm</th>
+
+                                                                <th scope="col">Đã bán</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach var="item" items="${bestSellers}">
+                                                                <tr>
+
+                                                                    <td><a href="#"
+                                                                            class="text-primary fw-bold">${item.productName}</a>
+                                                                    </td>
+
+                                                                    <td class="fw-bold">${item.totalSold}</td>
+
+                                                                </tr>
+                                                            </c:forEach>
 
 
-                                    <div class="card-body">
-                                        <h5 class="card-title">Đơn hàng gần đây </h5>
+                                                        </tbody>
+                                                    </table>
 
-                                        <table class="table table-borderless datatable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Khách hàng</th>
-                                                    <th scope="col">Số lượng</th>
-                                                    <th scope="col">Giá</th>
-                                                    <th scope="col">Trạng thái</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="order" items="${orders}">
-                                                    <%-- Tính tổng số lượng sản phẩm trong đơn hàng này --%>
-                                                        <c:set var="totalQuantity" value="0" />
-                                                        <c:forEach var="item" items="${order.orderDetails}">
-                                                            <c:set var="totalQuantity"
-                                                                value="${totalQuantity + item.quantity}" />
-                                                        </c:forEach>
+                                                </div>
 
-                                                        <tr>
-                                                            <th scope="row"><a href="#">${order.orderId}</a></th>
-                                                            <td>${order.receiverName}</td>
-                                                            <td>${totalQuantity}</td>
-                                                            <td>
-                                                                <fmt:formatNumber type="number"
-                                                                    value="${order.totalPrice}" /> đ
-                                                            </td>
-                                                            <td><span class="badge bg-success">${order.status}</span>
-                                                            </td>
-                                                        </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                            </div>
+                                        </div><!-- End Top Selling -->
 
                                     </div>
-
-                                </div>
-                            </div><!-- End Recent Sales -->
-
-                            <!-- Top Selling -->
-                            <div class="col-12">
-                                <div class="card top-selling overflow-auto">
-
-
-
-                                    <div class="card-body pb-0">
-                                        <h5 class="card-title">Sản phẩm bán chạy </h5>
-
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-
-                                                    <th scope="col">Sản phẩm</th>
-
-                                                    <th scope="col">Đã bán</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${bestSellers}">
-                                                    <tr>
-
-                                                        <td><a href="#"
-                                                                class="text-primary fw-bold">${item.productName}</a>
-                                                        </td>
-
-                                                        <td class="fw-bold">${item.totalSold}</td>
-
-                                                    </tr>
-                                                </c:forEach>
-
-
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                </div>
-                            </div><!-- End Top Selling -->
-
-                            </div>
-                            </div><!-- End Left side columns -->
+                                </div><!-- End Left side columns -->
 
 
 

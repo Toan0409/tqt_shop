@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import vn.java.laptopshop.domain.Order;
 import vn.java.laptopshop.domain.OrderDetail;
+import vn.java.laptopshop.domain.Product;
+import vn.java.laptopshop.domain.User;
+import vn.java.laptopshop.domain.dto.BestSellingProductDTO;
+import vn.java.laptopshop.domain.dto.ProductRevenueDTO;
 import vn.java.laptopshop.repository.OrderDetailRepository;
 import vn.java.laptopshop.repository.OrderRepository;
 
@@ -60,6 +64,19 @@ public class OrderService {
 
             orderRepository.deleteById(orderId);
         }
+    }
+
+    public List<Order> fetchOrdersByUser(User user) {
+        return orderRepository.findByUserOrderByOrderIdDesc(user);
+    }
+
+    public List<BestSellingProductDTO> getTopBestSellingProducts(int topN) {
+        PageRequest pageable = PageRequest.of(0, topN);
+        return orderDetailRepository.findBestSellingProducts(pageable);
+    }
+
+    public List<ProductRevenueDTO> getRevenueByProduct() {
+        return orderDetailRepository.getRevenueByProduct();
     }
 
 }

@@ -9,11 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import vn.java.laptopshop.domain.Order;
 import vn.java.laptopshop.domain.PasswordResetToken;
 import vn.java.laptopshop.domain.Role;
 import vn.java.laptopshop.domain.User;
 import vn.java.laptopshop.domain.dto.RegisterDTO;
+import vn.java.laptopshop.repository.OrderRepository;
 import vn.java.laptopshop.repository.PasswordResetTokenRepository;
+import vn.java.laptopshop.repository.ProductRepository;
 import vn.java.laptopshop.repository.RoleRepository;
 import vn.java.laptopshop.repository.UserRepository;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -28,10 +31,15 @@ public class UserService {
     private final PasswordResetTokenRepository tokenRepository;
     private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
-            PasswordResetTokenRepository tokenRepository, JavaMailSender mailSender, PasswordEncoder passwordEncoder) {
+            PasswordResetTokenRepository tokenRepository, JavaMailSender mailSender, PasswordEncoder passwordEncoder,
+            ProductRepository productRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
         this.mailSender = mailSender;
         this.roleRepository = roleRepository;
         this.tokenRepository = tokenRepository;
@@ -117,5 +125,26 @@ public class UserService {
     public void updatePassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+    public long countUsers() {
+        return this.userRepository.count();
+    }
+
+    public long countOrders() {
+
+        return this.orderRepository.count();
+    }
+
+    public long countProducts() {
+
+        return this.productRepository.count();
+    }
+
+    public double calculateTotalRevenue() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream()
+                .mapToDouble(Order::getTotalPrice)
+                .sum();
     }
 }
